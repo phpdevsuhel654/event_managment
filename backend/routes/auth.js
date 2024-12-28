@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Register
 router.post("/register", async (req, res) => {
+    //console.log(req.body);
     try {
         const { name, email, password } = req.body;
 
@@ -18,6 +19,7 @@ router.post("/register", async (req, res) => {
 
         res.status(201).json({ message: "User registered successfully"});
     } catch(error) {
+        //console.log("Error...", error);
         res.status(500).json(error);
     }
 });
@@ -25,7 +27,7 @@ router.post("/register", async (req, res) => {
 //Login
 router.post("/login", async (req, res) => {
     try {
-        const { name, email } = req.body;
+        const { email, password } = req.body;
 
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: "User not found" });
