@@ -55,7 +55,7 @@ const Login = () => {
           </button>
         </div>
         <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          Forgot <a href="javascript:void()">password?</a>
         </p>
       </form>
         // <form onSubmit={handleLogin}>
