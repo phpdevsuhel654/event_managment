@@ -15,7 +15,7 @@ Register:
 Login:
 {
     "email": "john@example.com",
-    "password": "john@4"
+    "password": "john@123"
 }
 #######################################
 

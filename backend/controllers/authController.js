@@ -18,9 +18,11 @@ const register = async (req, res) => {
         await newUser.save();
 
         res.status(201).json({ message: "User registered successfully"});
-    } catch(error) {
+    } catch(err) {
         //console.log("Error...", error);
-        res.status(500).json(error);
+        res.status(500).json({
+            error: err.message
+        });
     }
 };
 
@@ -40,8 +42,10 @@ const login = async (req, res) => {
 
         res.status(200).json({ token, user: { id: user._id, name: user.name, email: user.email } });
     } catch (error) {
-        console.log("Error...", error);
-        res.status(500).json(error);
+        //console.log("Error...", error);
+        res.status(500).json({
+            error: err.message
+        });
     }
 };
 
