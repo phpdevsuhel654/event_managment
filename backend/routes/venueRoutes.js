@@ -1,6 +1,9 @@
 const express = require("express");
-const venueController = require("../controllers/venueController")
+const venueController = require("../controllers/venueController");
+const authenticateMiddleware = require('../middleware/authenticateMiddleware')
 const venueRouter = express.Router();
+
+venueRouter.use(authenticateMiddleware.authenticate);
 
 venueRouter.route("/").post(venueController.add);
 venueRouter.route("/").get(venueController.get_all);
