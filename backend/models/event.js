@@ -6,7 +6,7 @@ const EventSchema = new mongoose.Schema({
     organiser_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', require: true },
     venue_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Venue', require: true },
     date: { type: Date, require: true },
-    time: { type: Time, require: true },
+    time: { type: String, require: true },
     tickets_available: { type: Number, require: true },
     tickets_price: { type: Number, require: true },
     categories: { type: String, enum: ['Music', 'Tech', 'Sports'], default: '' }
