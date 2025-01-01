@@ -17,9 +17,9 @@ export default function Header() {
           <div className="collapse navbar-collapse ml-auto" id="navbarsExample09">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="index.html">Home</a>
+                <a className="nav-link" href="/">Home</a>
               </li>
-              <li className="nav-item dropdown @@portfolio">
+              {/* <li className="nav-item dropdown @@portfolio">
                 <a className="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Portfolio <span className="ion-ios-arrow-down" /></a>
                 <ul className="dropdown-menu" aria-labelledby="dropdown03">
                   <li><a className="dropdown-item @@portfolioFilter" href="portfolio.html">Portfolio Filter</a></li>
@@ -32,9 +32,10 @@ export default function Header() {
                     </ul>
                   </li>
                 </ul>
-              </li>
-              <li className="nav-item @@service"><a className="nav-link" href="service.html">Service</a></li>
-              <li className="nav-item dropdown @@blog">
+              </li> */}
+              <li className="nav-item @@service"><a className="nav-link" href="service.html">Events</a></li>
+              <li className="nav-item @@service"><a className="nav-link" href="service.html">About Us</a></li>
+              {/* <li className="nav-item dropdown @@blog">
                 <a className="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <span className="ion-ios-arrow-down" /></a>
                 <ul className="dropdown-menu" aria-labelledby="dropdown05">
                   <li><a className="dropdown-item @@blogGrid" href="blog-grid.html">Blog Grid</a></li>
@@ -50,8 +51,8 @@ export default function Header() {
                     </ul>
                   </li>
                 </ul>
-              </li>
-              <li className="nav-item dropdown @@pages">
+              </li> */}
+              {/* <li className="nav-item dropdown @@pages">
                 <a className="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages <span className="ion-ios-arrow-down" /></a>
                 <ul className="dropdown-menu" aria-labelledby="dropdown05">
                   <li><a className="dropdown-item @@about" href="about.html">About Us</a></li>
@@ -60,8 +61,9 @@ export default function Header() {
                   <li><a className="dropdown-item @@faq" href="faq.html">FAQ</a></li>
                   <li><a className="dropdown-item @@pricing" href="pricing.html">Pricing Table</a></li>
                 </ul>
-              </li>
+              </li> */}
               <li className="nav-item @@contact"><a className="nav-link" href="contact.html">Contact</a></li>
+              <li className="nav-item @@contact"><a className="nav-link btn btn-solid-border" href="/login">Login</a></li>
             </ul>
           </div>
         </nav>
