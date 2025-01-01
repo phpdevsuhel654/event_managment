@@ -1,11 +1,11 @@
-const Venue = require('../models/venue');
+const Event = require('../models/event');
 
-// Add a new venue
+// Add a new event
 const add = async (req, res) => {
     try {
-        const newVenue = new Venue(req.body);
-        await newVenue.save();
-        res.status(201).json(newVenue);
+        const newEvent = new Event(req.body);
+        await newEvent.save();
+        res.status(201).json(newEvent);
     } catch
     (err) {
         res.status(400).json({
@@ -14,11 +14,11 @@ const add = async (req, res) => {
     }
 }
 
-// Get all venues
+// Get all events
 const get_all = async (req, res) => {
     try {
-        const venues = await Venue.find();
-        res.json(venues);
+        const events = await Event.find();
+        res.json(events);
     } catch (err) {
         res.status(500).json({
             error:
@@ -27,30 +27,30 @@ const get_all = async (req, res) => {
     }
 }
 
-// Get a specific venue
+// Get a specific event
 const get_by_id = async (req, res) => {
     try {
-        const venue = await Venue.findById(req.params.id);
-        if (!venue) {
-            return res.status(404).json({ error: 'Venue not found' });
+        const event = await Event.findById(req.params.id);
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found' });
         }
-        res.json(venue);
+        res.json(event);
     } catch
     (err) {
         res.status(500).json({ error: err.message });
     }
 }
 
-// Update a venue
+// Update a event
 const update = async (req, res) => {
     try {
-        const venue = await Venue.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!venue) {
+        const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!event) {
             return res.status(404).json({
-                error: 'Venue not found'
+                error: 'Event not found'
             });
         }
-        res.json(venue);
+        res.json(event);
     } catch (err) {
         res.status(400).json({
             error: err.message
@@ -58,17 +58,17 @@ const update = async (req, res) => {
     }
 }
 
-// Delete a venue
+// Delete a event
 const delete_by_id = async (req, res) => {
     try {
-        const venue = await Venue.findByIdAndDelete(req.params.id);
-        if (!venue) {
+        const event = await Event.findByIdAndDelete(req.params.id);
+        if (!event) {
             return res.status(404).json({
-                error: 'Venue not found'
+                error: 'Event not found'
             });
         }
         res.json({
-            message: 'Venue deleted'
+            message: 'Event deleted'
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
