@@ -6,6 +6,11 @@ JWT_SECRET=44f71b976ef60aac8a53cc81e10e33ab96c891a44f3fc490ac1b1ecc5a27c0cff6f36
 PORT=5000
 
 #######################################
+
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NzE4MjJkMzViOTA3ZGJhMTI5MmU5MSIsImlhdCI6MTczNTY1OTc3MSwiZXhwIjoxNzM1NzQ2MTcxfQ.frM8219fW_MD_WRXBA8qToKxw3fw53p96SDBFS6e0eI
+
+#######################################
+
 Register:
 {
     "name": "John",
@@ -15,7 +20,8 @@ Register:
 Login:
 {
     "email": "john@example.com",
-    "password": "john@4"
+    "password": "john@123"
 }
+
 #######################################
 
