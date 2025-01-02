@@ -6,9 +6,14 @@ import axios from "axios";
 const Login = () => {
 
   const [name, setName] = useState(""); // for name
-  const [email, setEmail] = useState(""); // for email
-  const [password, setPassword] = useState(""); // for password
+  const [login_email, setLoginEmail] = useState(""); // for email
+  const [reg_email, setRegEmail] = useState(""); // for email
+  const [login_password, setLoginPassword] = useState(""); // for password
+  const [reg_password, setRegPassword] = useState(""); // for password
   const [role, setRole] = useState(""); // for role
+
+  //const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  //const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
   const handleChange = (e) => {
     setRole(e.target.value);  // Update the role state when the user selects an option
@@ -18,29 +23,44 @@ const Login = () => {
       
         e.preventDefault();
         try {
-            const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+            const { data } = await axios.post("http://localhost:5000/api/auth/login", { login_email, login_password });
             localStorage.setItem("token", data.token);
-            alert("Login successful");
+            //alert("Login successful");
+			//setSuccessMessage("Login successful! Welcome!");
+			//setErrorMessage(""); // Clear any previous error messages
         } catch (err) {
-            alert("Login failed");
+            // alert("Login failed");
+			//setErrorMessage("Invalid username or password. Please try again.");
+      		//setSuccessMessage(""); // Clear any previous success messages
         }
     };
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
-            alert("Registration successful");
+            await axios.post("http://localhost:5000/api/auth/register", { name, reg_email, reg_password,role });
+            // alert("Registration successful");
+			//setSuccessMessage("Registration successful!");
+			//setErrorMessage(""); // Clear any previous error messages
         } catch (err) {
-            console.log(err);
-            alert("Registration failed");
+            //console.log(err);
+            //alert("Registration failed");
+			//setErrorMessage("Registration failed. Please try again.");
+      		//setSuccessMessage(""); // Clear any previous success messages
         }
     };
 
     return (
 		<div className="App">
         <section class="page-title bg-2">
+		
   <div class="container">
+  {successMessage && (
+			<p style={{ color: "green", marginTop: "20px" }}>{successMessage}</p>
+		)}
+		{errorMessage && (
+			<p style={{ color: "red", marginTop: "20px" }}>{errorMessage}</p>
+		)}
     <div class="row">
       <div class="col-md-12">
         <div class="block">
@@ -57,24 +77,24 @@ const Login = () => {
   <div className="row">
  <div class="col">
   <fieldset class="border p-4">
-    <legend class="w-auto">Login</legend>
+    <legend class="w-auto">SIGN IN</legend>
     <form id="contact-form1" onSubmit={handleLogin}>
       <div class="block">
         <div class="form-group">
           <label htmlfor="exampleInputEmail1" class="float-left">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Please Enter email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Please Enter email" required value={login_email} onChange={(e) => setLoginEmail(e.target.value)} />
           <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group mt-2">
           <label htmlfor="exampleInputPassword1" class="float-left">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Please Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Please Enter Password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} required />
         </div>
         <div class="form-check float-left">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" />
           <label class="form-check-label" htmlfor="exampleCheck1">Check me out</label>
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-primary mt-4">Sign In</button>
+        <button type="submit" class="btn btn-primary mt-4">LOGIN</button>
         </div>
       </div>
     </form>
@@ -83,29 +103,29 @@ const Login = () => {
 
     <div class="col">
     <fieldset class="border p-4">
-    <legend class="w-auto">Registration</legend>
+    <legend class="w-auto">CREATE A NEW ACCOUNT</legend>
     <form id="contact-form1" onSubmit={handleRegister}>
       <div class="block">
         <div class="form-group">
           <label htmlfor="firstname" class="float-left">Name</label>
-          <input type="text" className="form-control" placeholder="Please Enter First name" value={name} onChange={(e) => setName(e.target.value)} required />
+          <input type="text" className="form-control" placeholder="Please Enter First name" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
           <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label htmlfor="regemail" class="float-left">Email</label>
-          <input type="text" className="form-control" placeholder="Please Enter Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input type="text" className="form-control" name="email" placeholder="Please Enter Email" value={reg_email} onChange={(e) => setRegEmail(e.target.value)} required />
         </div>
         <div class="form-group">
           <label htmlfor="regpassword" class="float-left">Password</label>
-          <input type="password" className="form-control" placeholder="Please Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input type="password" className="form-control" name="password" placeholder="Please Enter Password" value={reg_password} onChange={(e) => setRegPassword(e.target.value)} required />
         </div>
         <div class="form-group">
           <label htmlfor="regrole" class="float-left">Role</label>
-          <select class="form-control" value={role} onChange={handleChange} required>
-            <option>Please select</option>
-            <option value="attendee">attendee</option>
-            <option value="organizer">organizer</option>
-            <option value="admin">admin</option>
+          <select class="form-control" name="role" value={role} onChange={handleChange} required>
+            <option>Please select role</option>
+            <option value="attendee">Attendee</option>
+            <option value="organizer">Organizer</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
         <div class="form-check float-left">
@@ -113,7 +133,7 @@ const Login = () => {
           <label class="form-check-label" htmlfor="exampleCheck1">Check me out</label>
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-primary mt-4">Sign Up</button>
+        <button type="submit" class="btn btn-primary mt-4">SIGN UP</button>
         </div>
       </div>
     </form>
