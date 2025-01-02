@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
+
+  // const notify = () => {
+  //   toast.success('',{
+  //     position:toast.POSITION.TOP_RIGHT,
+  //   });
+  // }
 
   const [name, setName] = useState(""); // for name
   const [login_email, setLoginEmail] = useState(""); // for email
@@ -12,8 +19,8 @@ const Login = () => {
   const [reg_password, setRegPassword] = useState(""); // for password
   const [role, setRole] = useState(""); // for role
 
-  //const [successMessage, setSuccessMessage] = useState(""); // State for success message
-  //const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  // const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  // const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
   const handleChange = (e) => {
     setRole(e.target.value);  // Update the role state when the user selects an option
@@ -25,28 +32,35 @@ const Login = () => {
         try {
             const { data } = await axios.post("http://localhost:5000/api/auth/login", { login_email, login_password });
             localStorage.setItem("token", data.token);
+            toast.success("Login successful!");      
             //alert("Login successful");
-			//setSuccessMessage("Login successful! Welcome!");
-			//setErrorMessage(""); // Clear any previous error messages
+			// setSuccessMessage("Login successful! Welcome!");
+			// setErrorMessage(""); // Clear any previous error messages
         } catch (err) {
+          toast.error("Invalid username or password. Please try again.");   
             // alert("Login failed");
-			//setErrorMessage("Invalid username or password. Please try again.");
-      		//setSuccessMessage(""); // Clear any previous success messages
+			// setErrorMessage("Invalid username or password. Please try again.");
+      // 		setSuccessMessage(""); // Clear any previous success messages
         }
     };
 
     const handleRegister = async (e) => {
+      //setLoading(true);
         e.preventDefault();
         try {
             await axios.post("http://localhost:5000/api/auth/register", { name, reg_email, reg_password,role });
             // alert("Registration successful");
-			//setSuccessMessage("Registration successful!");
-			//setErrorMessage(""); // Clear any previous error messages
+
+      
+      toast.success("Registration successful!");      
+			// setSuccessMessage("Registration successful!");
+			// setErrorMessage(""); // Clear any previous error messages
         } catch (err) {
             //console.log(err);
             //alert("Registration failed");
-			//setErrorMessage("Registration failed. Please try again.");
-      		//setSuccessMessage(""); // Clear any previous success messages
+            toast.error("Registration failed. Please try again.");    
+			// setErrorMessage("Registration failed. Please try again.");
+      // 		setSuccessMessage(""); // Clear any previous success messages
         }
     };
 
@@ -55,13 +69,9 @@ const Login = () => {
         <section class="page-title bg-2">
 		
   <div class="container">
-  {successMessage && (
-			<p style={{ color: "green", marginTop: "20px" }}>{successMessage}</p>
-		)}
-		{errorMessage && (
-			<p style={{ color: "red", marginTop: "20px" }}>{errorMessage}</p>
-		)}
+      
     <div class="row">
+    
       <div class="col-md-12">
         <div class="block">
           <h1>Authentication</h1>
@@ -71,6 +81,13 @@ const Login = () => {
     </div>
   </div>
 </section>
+<ToastContainer />
+{/* {successMessage && (
+        <p style={{ color: "green", marginTop: "20px" }}>{successMessage}</p>
+      )}
+      {errorMessage && (
+        <p style={{ color: "red", marginTop: "20px" }}>{errorMessage}</p>
+      )} */}
 {/* contact form start */}
 <section className="login-form">
   <div className="container">
