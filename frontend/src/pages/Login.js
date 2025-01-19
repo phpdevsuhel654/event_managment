@@ -1,42 +1,165 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+  // const notify = () => {
+  //   toast.success('',{
+  //     position:toast.POSITION.TOP_RIGHT,
+  //   });
+  // }
+
+  const [name, setName] = useState(""); // for name
+  const [login_email, setLoginEmail] = useState(""); // for email
+  const [reg_email, setRegEmail] = useState(""); // for email
+  const [login_password, setLoginPassword] = useState(""); // for password
+  const [reg_password, setRegPassword] = useState(""); // for password
+  const [role, setRole] = useState(""); // for role
+
+  // const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  // const [errorMessage, setErrorMessage] = useState(""); // State for error message
+
+  const handleChange = (e) => {
+    setRole(e.target.value);  // Update the role state when the user selects an option
+  };
 
     const handleLogin = async (e) => {
+      
         e.preventDefault();
         try {
-            const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+            const { data } = await axios.post("http://localhost:5000/api/auth/login", { login_email, login_password });
             localStorage.setItem("token", data.token);
-            alert("Login successful");
+            toast.success("Login successful!");      
+            //alert("Login successful");
+			// setSuccessMessage("Login successful! Welcome!");
+			// setErrorMessage(""); // Clear any previous error messages
         } catch (err) {
-            alert("Login failed");
+          toast.error("Invalid username or password. Please try again.");   
+            // alert("Login failed");
+			// setErrorMessage("Invalid username or password. Please try again.");
+      // 		setSuccessMessage(""); // Clear any previous success messages
+        }
+    };
+
+    const handleRegister = async (e) => {
+      //setLoading(true);
+        e.preventDefault();
+        try {
+            await axios.post("http://localhost:5000/api/auth/register", { name, reg_email, reg_password,role });
+            // alert("Registration successful");
+
+      
+      toast.success("Registration successful!");      
+			// setSuccessMessage("Registration successful!");
+			// setErrorMessage(""); // Clear any previous error messages
+        } catch (err) {
+            //console.log(err);
+            //alert("Registration failed");
+            toast.error("Registration failed. Please try again.");    
+			// setErrorMessage("Registration failed. Please try again.");
+      // 		setSuccessMessage(""); // Clear any previous success messages
         }
     };
 
     return (
 		<div className="App">
         <section class="page-title bg-2">
+		
   <div class="container">
+      
     <div class="row">
+    
       <div class="col-md-12">
         <div class="block">
-          <h1>Login</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, quibusdam.</p>
+          <h1>Authentication</h1>
+          <p>User Login / Register Form </p>
         </div>
       </div>
     </div>
   </div>
 </section>
+<ToastContainer />
+{/* {successMessage && (
+        <p style={{ color: "green", marginTop: "20px" }}>{successMessage}</p>
+      )}
+      {errorMessage && (
+        <p style={{ color: "red", marginTop: "20px" }}>{errorMessage}</p>
+      )} */}
 {/* contact form start */}
 <section className="login-form">
   <div className="container">
-    <form className="row" id="contact-form">
-      <div className="col-md-6 col-sm-12">
+  <div className="row">
+ <div class="col">
+  <fieldset class="border p-4">
+    <legend class="w-auto">SIGN IN</legend>
+    <form id="contact-form1" onSubmit={handleLogin}>
+      <div class="block">
+        <div class="form-group">
+          <label htmlfor="exampleInputEmail1" class="float-left">Email</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Please Enter email" required value={login_email} onChange={(e) => setLoginEmail(e.target.value)} />
+          <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group mt-2">
+          <label htmlfor="exampleInputPassword1" class="float-left">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Please Enter Password" value={login_password} onChange={(e) => setLoginPassword(e.target.value)} required />
+        </div>
+        <div class="form-check float-left">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+          <label class="form-check-label" htmlfor="exampleCheck1">Check me out</label>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary mt-4">LOGIN</button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+</div>
+
+    <div class="col">
+    <fieldset class="border p-4">
+    <legend class="w-auto">CREATE A NEW ACCOUNT</legend>
+    <form id="contact-form1" onSubmit={handleRegister}>
+      <div class="block">
+        <div class="form-group">
+          <label htmlfor="firstname" class="float-left">Name</label>
+          <input type="text" className="form-control" placeholder="Please Enter First name" name="name" value={name} onChange={(e) => setName(e.target.value)} required />
+          <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label htmlfor="regemail" class="float-left">Email</label>
+          <input type="text" className="form-control" name="email" placeholder="Please Enter Email" value={reg_email} onChange={(e) => setRegEmail(e.target.value)} required />
+        </div>
+        <div class="form-group">
+          <label htmlfor="regpassword" class="float-left">Password</label>
+          <input type="password" className="form-control" name="password" placeholder="Please Enter Password" value={reg_password} onChange={(e) => setRegPassword(e.target.value)} required />
+        </div>
+        <div class="form-group">
+          <label htmlfor="regrole" class="float-left">Role</label>
+          <select class="form-control" name="role" value={role} onChange={handleChange} required>
+            <option>Please select role</option>
+            <option value="attendee">Attendee</option>
+            <option value="organizer">Organizer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-check float-left">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+          <label class="form-check-label" htmlfor="exampleCheck1">Check me out</label>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary mt-4">SIGN UP</button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+    </div>
+  </div>
+  {/* <div className="row">
+    <form className="row1" id="contact-form1">
+      <div className="col-md-12 col-sm-12">
         <div className="block">
           <div className="form-group">
             <input name="user_name" type="text" className="form-control" placeholder="Your Name" />
@@ -49,8 +172,9 @@ const Login = () => {
           </div>
         </div>
       </div>
-	  
-      <div className="col-md-6 col-sm-12">
+      </form>
+      <form className="row1" id="contact-form2">
+      <div className="col-md-12 col-sm-12">
         <div className="block">
           <div className="form-group-2">
             <textarea name="user_message" className="form-control" rows={4} placeholder="Your Message" defaultValue={""} />
@@ -58,10 +182,11 @@ const Login = () => {
           <button className="btn btn-default" type="submit">Send Message</button>
         </div>
       </div>
+      </form>
       <div className="error" id="error">Sorry Msg dose not sent</div>
       <div className="success" id="success">Message Sent</div>
-    </form>
-	
+    
+    </div> */}
     {/* <div className="contact-box row">
       <div className="col-md-6 col-sm-12">
         <div className="block">
